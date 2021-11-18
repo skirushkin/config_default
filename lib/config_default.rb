@@ -25,7 +25,7 @@ module ConfigDefault
     {}
   end
 
-  def load_struct(name, key: Rails.env)
-    ConfigDefault::Struct.new(load(name, key: key))
+  def load_struct(name, key: Rails.env, recursive: false, allow_nil: true)
+    ConfigDefault::Struct.new(load(name, key: key), recursive: recursive, allow_nil: allow_nil)
   end
 end

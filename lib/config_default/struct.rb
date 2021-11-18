@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 
 class ConfigDefault::Struct
-  def initialize(attributes = {})
-    @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes).freeze
+  def initialize(attributes = {}, recursive: false, allow_nil: false)
+    @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
+    @allow_nil = allow_nil
+
+    if recursive
+      @attributes.each do |key, value|
+        next unless value.is_a?(Hash)
+
+        @attributes[key] =
+          ConfigDefault::Struct.new(value, recursive: recursive, allow_nil: @allow_nil)
+      end
+    end
+
+    @attributes.freeze
   end
 
   def [](key)
@@ -10,7 +22,8 @@ class ConfigDefault::Struct
   end
 
   def method_missing(method, *_args)
-    @attributes[method] if @attributes.key?(method)
+    return @attributes[method] if @attributes.key?(method)
+    raise StandardError.new("There is no key :#{method} in configuration.") unless @allow_nil
   end
 
   def respond_to_missing?(*_args)
