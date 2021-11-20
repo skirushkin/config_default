@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConfigDefault::Struct
-  RESERVED_METHODS = %w[method_missing respond_to_missing? to_hash].freeze
+  RESERVED_METHODS = %i[method_missing respond_to_missing? to_hash].freeze
 
   def initialize(attributes = {}, recursive: false, allow_nil: false)
     @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
@@ -16,7 +16,7 @@ class ConfigDefault::Struct
     end
 
     @attributes.each do |key, value|
-      next if RESERVED_METHODS.include?(key.to_s)
+      next if RESERVED_METHODS.include?(key.to_sym)
       define_singleton_method(key) { value }
     end
 
