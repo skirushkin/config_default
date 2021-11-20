@@ -1,6 +1,6 @@
 ## 0.1.2
 
-- Moved config option definition from `#method_missing` to `#define_singleton_method`
+- Move config struct option definition from `#method_missing` to `#define_singleton_method`
 
 ## 0.1.1
 
