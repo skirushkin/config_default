@@ -106,7 +106,7 @@ config = ConfigDefault.load(:app, key: "preprod") # Will search preprod key in f
 
 ### Struct using
 
-If you want to use configuration as an struct object you can use `#load_struct` method.
+If you want to use configuration as a struct object you can use `#load_struct` method.
 Let's see an example with `database.yaml` config above:
 
 ```ruby
