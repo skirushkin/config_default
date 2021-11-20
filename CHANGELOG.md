@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Move config struct option definition from `#method_missing` to `#define_singleton_method`
+
 ## 0.1.1
 
 - Remove Rails dependency.
