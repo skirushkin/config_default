@@ -5,9 +5,7 @@ require "active_support/core_ext/hash"
 require "config_default/version"
 require "config_default/config"
 require "config_default/struct"
-
-require "config_default/rails/application/configuration_extension"
-require "config_default/rails/application_extension"
+require "config_default/rails_monkey_patch"
 
 module ConfigDefault
   extend self
@@ -48,3 +46,5 @@ module ConfigDefault
     ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
   end
 end
+
+ConfigDefault::RailsMonkeyPatch.call
