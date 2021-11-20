@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    config_default (0.1.0)
-      rails (~> 6)
+    config_default (0.1.1)
+      activesupport (~> 6)
 
 GEM
   remote: https://rubygems.org/
