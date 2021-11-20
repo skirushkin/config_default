@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ConfigDefault::Struct
+  RESERVED_METHODS = %w[method_missing respond_to_missing? to_hash].freeze
+
   def initialize(attributes = {}, recursive: false, allow_nil: false)
     @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
     @allow_nil = allow_nil
@@ -13,6 +15,11 @@ class ConfigDefault::Struct
       end
     end
 
+    @attributes.each do |key, value|
+      next if RESERVED_METHODS.include?(key.to_s)
+      define_singleton_method(key) { value }
+    end
+
     @attributes.freeze
   end
 
@@ -21,7 +28,6 @@ class ConfigDefault::Struct
   end
 
   def method_missing(method, *_args)
-    return @attributes[method] if @attributes.key?(method)
     raise StandardError.new("There is no option :#{method} in configuration.") unless @allow_nil
   end
 
