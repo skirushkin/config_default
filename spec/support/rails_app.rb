@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-class App < Rails::Application
-end
-
 def make_rails_app
-  app = Class.new(App) do
+  app = Class.new(Rails::Application) do
     def self.name
-      "RailsApp"
+      "App"
     end
   end
 
