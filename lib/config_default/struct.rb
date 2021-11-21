@@ -3,22 +3,13 @@
 class ConfigDefault::Struct
   RESERVED_METHODS = %i[method_missing respond_to_missing? to_hash].freeze
 
-  def initialize(attributes = {}, recursive: false, allow_nil: false)
+  def initialize(attributes:, recursive: false, allow_nil: false)
     @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
     @allow_nil = allow_nil
     @recursive = recursive
 
-    if @recursive
-      @attributes.each do |key, value|
-        next unless value.is_a?(Hash)
-        @attributes[key] = self.class.new(value, recursive: @recursive, allow_nil: @allow_nil)
-      end
-    end
-
-    @attributes.each do |key, value|
-      next if RESERVED_METHODS.include?(key.to_sym)
-      define_singleton_method(key) { value }
-    end
+    make_recursive!
+    define_methods!
 
     @attributes.freeze
   end
@@ -28,7 +19,8 @@ class ConfigDefault::Struct
   end
 
   def method_missing(method, *_args)
-    raise StandardError.new("There is no option :#{method} in configuration.") unless @allow_nil
+    return if @allow_nil
+    raise StandardError.new("There is no option :#{method} in configuration.")
   end
 
   def respond_to_missing?(*_args)
@@ -46,5 +38,27 @@ class ConfigDefault::Struct
     end
 
     dup
+  end
+
+  private
+
+  def make_recursive!
+    return unless @recursive
+
+    @attributes.each do |key, value|
+      next unless value.is_a?(Hash)
+      @attributes[key] = self.class.new(
+        attributes: value,
+        recursive: @recursive,
+        allow_nil: @allow_nil,
+      )
+    end
+  end
+
+  def define_methods!
+    @attributes.each do |key, value|
+      next if RESERVED_METHODS.include?(key.to_sym)
+      define_singleton_method(key) { value }
+    end
   end
 end

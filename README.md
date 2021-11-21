@@ -9,7 +9,7 @@ Maybe in future I'll remove Rails dependency (cause it's never cool) and leave o
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'config_default'
+gem "config_default"
 ```
 
 And then execute:
@@ -104,7 +104,7 @@ config = ConfigDefault.load(:app, key: nil) # Will not use key at all and result
 config = ConfigDefault.load(:app, key: "preprod") # Will search preprod key in file
 ```
 
-### Struct using
+### `#load_struct` method
 
 If you want to use configuration as a struct object you can use `#load_struct` method.
 Let's see an example with `database.yaml` config above:
@@ -155,6 +155,24 @@ config.first.to_hash
 config.first.second.to_hash
 # => { "third" => "option" }
 ```
+
+### Using `ConfigDefault::Struct` without configuration load
+
+You can use `ConfigDefault::Struct` to achive ability to create config object from Hash objects.
+Here an example of creation struct object on the fly:
+
+```ruby
+config_on_the_fly = { first: { second: { third: "option" } } }
+config = ConfigDefault::Struct.new(attributes: config_on_the_fly, recursive: true)
+config.first.to_hash
+# => { "second" => { "third" => "option" } }
+config.first.second.third
+# => "option"
+config.first.lolkek
+# => StandardError: There is no option :lolkek in configuration.
+```
+
+`ConfigDefault::Struct` supports `recursive` and `allow_nil` options.
 
 ## Contributing
 
