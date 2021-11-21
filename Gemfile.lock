@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    config_default (0.1.2)
+    config_default (0.2.0)
       activesupport (~> 6)
 
 GEM

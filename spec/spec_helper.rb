@@ -5,6 +5,11 @@ require "rails"
 
 require "config_default"
 
+ConfigDefault.configure do |config|
+  config.config_path = "./spec/config_examples"
+  config.postfix = "default"
+end
+
 Dir[File.join(__dir__, "support/**/*.rb")].sort.each { |f| require(f) }
 
 RSpec.configure do |config|

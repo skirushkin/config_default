@@ -2,17 +2,17 @@
 
 describe ConfigDefault do
   describe "#configure" do
-    it "can change config_path" do
+    it "can change config_path and postfix" do
       described_class.configure do |config|
-        config.config_path = "./other_config"
+        config.config_path = "./other_config_path"
         config.postfix = "not_default"
       end
 
-      expect(described_class.config.config_path).to eq("./other_config")
+      expect(described_class.config.config_path).to eq("./other_config_path")
       expect(described_class.config.postfix).to eq("not_default")
 
       described_class.configure do |config|
-        config.config_path = "./config"
+        config.config_path = "./spec/config_examples"
         config.postfix = "default"
       end
     end
@@ -87,7 +87,7 @@ end
 
 describe Rails::Application::Configuration do
   describe "#load_database_yaml" do
-    it "load database configuration" do
+    it "load database configuration in rails style" do
       make_rails_app
       expect(Rails.application.config.load_database_yaml).to eq(
         "development" => { "host" => "localhost", "database" => "example" },
@@ -96,7 +96,7 @@ describe Rails::Application::Configuration do
   end
 
   describe "#database_configuration" do
-    it "load database configuration" do
+    it "load database configuration in rails style" do
       make_rails_app
       expect(Rails.application.config.database_configuration).to eq(
         "development" => { "host" => "localhost", "database" => "example" },
