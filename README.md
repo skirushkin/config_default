@@ -162,7 +162,7 @@ You can use `ConfigDefault::Struct` to achive ability to create config object fr
 Here an example of creation struct object on the fly:
 
 ```ruby
-config_on_the_fly = { "first" => { "second" => { "third" => "option" } } }
+config_on_the_fly = { first: { second: { third: "option" } } }
 config = ConfigDefault::Struct.new(attributes: config_on_the_fly, recursive: true)
 config.first.to_hash
 # => { "second" => { "third" => "option" } }
