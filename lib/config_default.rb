@@ -4,8 +4,8 @@ require "active_support/core_ext/hash"
 
 require "config_default/version"
 require "config_default/config"
-require "config_default/struct"
 require "config_default/init"
+require "config_default/struct"
 require "config_default/rails_application_extension"
 require "config_default/rails_application_configuration_extension"
 
