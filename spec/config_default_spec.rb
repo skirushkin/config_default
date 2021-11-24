@@ -72,7 +72,9 @@ describe ConfigDefault do
   end
 end
 
-describe Rails::Application do
+ConfigDefault.init_rails_monkey_patch!
+
+describe ConfigDefault::RailsApplicationExtension do
   describe "#config_for" do
     it "load configuration in rails style" do
       make_rails_app
@@ -85,7 +87,7 @@ describe Rails::Application do
   end
 end
 
-describe Rails::Application::Configuration do
+describe ConfigDefault::RailsApplicationConfigurationExtension do
   describe "#load_database_yaml" do
     it "load database configuration in rails style" do
       make_rails_app

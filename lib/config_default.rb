@@ -4,8 +4,10 @@ require "active_support/core_ext/hash"
 
 require "config_default/version"
 require "config_default/config"
+require "config_default/init"
 require "config_default/struct"
-require "config_default/rails_monkey_patch"
+require "config_default/rails_application_extension"
+require "config_default/rails_application_configuration_extension"
 
 module ConfigDefault
   extend self
@@ -16,6 +18,10 @@ module ConfigDefault
 
   def configure
     yield(config) if block_given?
+  end
+
+  def init_rails_monkey_patch!
+    ConfigDefault::Init.init_rails_monkey_patch!
   end
 
   def load(name, key: Rails.env, symbolize_keys: false, deep_symbolize_keys: false)
@@ -49,5 +55,3 @@ module ConfigDefault
     )
   end
 end
-
-ConfigDefault::RailsMonkeyPatch.call
