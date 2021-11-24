@@ -6,5 +6,3 @@ module ConfigDefault::RailsApplicationExtension
     ActiveSupport::OrderedOptions.new.merge(data)
   end
 end
-
-
