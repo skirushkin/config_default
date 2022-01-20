@@ -73,11 +73,11 @@ describe ConfigDefault do
 end
 
 ConfigDefault.init_rails_monkey_patch!
+make_rails_app
 
 describe ConfigDefault::RailsApplicationExtension do
   describe "#config_for" do
     it "load configuration in rails style" do
-      make_rails_app
       config = Rails.application.config_for(:nested)
 
       expect(config.class).to eq(ActiveSupport::OrderedOptions)
@@ -90,7 +90,6 @@ end
 describe ConfigDefault::RailsApplicationConfigurationExtension do
   describe "#load_database_yaml" do
     it "load database configuration in rails style" do
-      make_rails_app
       expect(Rails.application.config.load_database_yaml).to eq(
         "development" => { "host" => "localhost", "database" => "example" },
       )
@@ -99,7 +98,6 @@ describe ConfigDefault::RailsApplicationConfigurationExtension do
 
   describe "#database_configuration" do
     it "load database configuration in rails style" do
-      make_rails_app
       expect(Rails.application.config.database_configuration).to eq(
         "development" => { "host" => "localhost", "database" => "example" },
       )
