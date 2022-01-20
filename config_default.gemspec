@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z`.split("\x0").reject { |f| f.include?("spec") }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activesupport", "~> 6"
+  spec.add_dependency "activesupport", ">= 6"
 end
