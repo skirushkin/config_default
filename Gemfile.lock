@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    config_default (0.2.2)
+    config_default (0.2.3)
       activesupport (>= 6)
 
 GEM
@@ -212,6 +212,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES

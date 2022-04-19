@@ -48,7 +48,7 @@ describe ConfigDefault do
 
         expect(config.first).to eq("one")
         expect(config.second).to eq("example")
-        expect { config.third }.to raise_error(StandardError)
+        expect { config.third }.to raise_error(ArgumentError)
       end
     end
 
