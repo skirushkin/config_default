@@ -20,7 +20,7 @@ class ConfigDefault::Struct
 
   def method_missing(method, *_args)
     return if @allow_nil
-    raise StandardError.new("There is no option :#{method} in configuration.")
+    raise ArgumentError.new("There is no option :#{method} in configuration.")
   end
 
   def respond_to_missing?(*_args)
