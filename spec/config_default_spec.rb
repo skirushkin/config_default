@@ -30,6 +30,16 @@ describe ConfigDefault do
     it "loads config from example3" do
       expect(described_class.load(:example3)).to eq("second" => "two")
     end
+
+    it "loads config from example1 and symbolize_keys" do
+      expect(described_class.load(:example1, symbolize_keys: true)).to \
+        eq(first: "one", second: "example")
+    end
+
+    it "does not fail on empty key symbolization" do
+      expect(described_class.load(:example1, key: "incorrect", symbolize_keys: true)).to eq({})
+      expect(described_class.load(:example1, key: "incorrect", deep_symbolize_keys: true)).to eq({})
+    end
   end
 
   describe "#load_struct" do

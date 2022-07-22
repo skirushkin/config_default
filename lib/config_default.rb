@@ -31,6 +31,8 @@ module ConfigDefault
     data = default_config.deep_merge(config)
     data = key ? data[key] : data
 
+    return {} if data.nil?
+
     if deep_symbolize_keys
       data.deep_symbolize_keys
     elsif symbolize_keys
