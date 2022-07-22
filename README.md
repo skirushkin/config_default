@@ -2,7 +2,6 @@
 
 ConfigDefault is a simple way to separate your test/development config from your staging/production config.
 Designed to work with [Rails](https://github.com/rails/rails). It depends on `ActiveSupport`.
-Maybe in future I'll remove Rails dependency (cause it's never cool) and leave only ActiveSupport.
 
 ## Installation
 
