@@ -3,7 +3,7 @@
 class ConfigDefault::Struct
   RESERVED_METHODS = %i[method_missing respond_to_missing? to_hash].freeze
 
-  def initialize(attributes:, recursive: false, allow_nil: false)
+  def initialize(attributes, recursive: false, allow_nil: false)
     @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
     @allow_nil = allow_nil
     @recursive = recursive
@@ -47,11 +47,7 @@ class ConfigDefault::Struct
 
     @attributes.each do |key, value|
       next unless value.is_a?(Hash)
-      @attributes[key] = self.class.new(
-        attributes: value,
-        recursive: @recursive,
-        allow_nil: @allow_nil,
-      )
+      @attributes[key] = self.class.new(value, recursive: @recursive, allow_nil: @allow_nil)
     end
   end
 
