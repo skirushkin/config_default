@@ -50,10 +50,7 @@ module ConfigDefault
   end
 
   def load_struct(name, key: Rails.env, recursive: false, allow_nil: false)
-    ConfigDefault::Struct.new(
-      attributes: load(name, key: key),
-      recursive: recursive,
-      allow_nil: allow_nil,
-    )
+    attributes = load(name, key: key)
+    ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
   end
 end

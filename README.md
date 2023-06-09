@@ -170,7 +170,7 @@ Here an example of creation struct object on the fly:
 
 ```ruby
 config_on_the_fly = { first: { second: { third: "option" } } }
-config = ConfigDefault::Struct.new(attributes: config_on_the_fly, recursive: true)
+config = ConfigDefault::Struct.new(config_on_the_fly, recursive: true)
 config.first.to_hash
 # => { "second" => { "third" => "option" } }
 config.first.second.third
