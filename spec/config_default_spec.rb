@@ -82,10 +82,10 @@ describe ConfigDefault do
   end
 end
 
-ConfigDefault.init_rails_monkey_patch!
+ConfigDefault.init_rails_patch!
 make_rails_app
 
-describe ConfigDefault::RailsApplicationExtension do
+describe ConfigDefault::RailsApplicationPatch do
   describe "#config_for" do
     it "load configuration in rails style" do
       config = Rails.application.config_for(:nested)
@@ -97,7 +97,7 @@ describe ConfigDefault::RailsApplicationExtension do
   end
 end
 
-describe ConfigDefault::RailsApplicationConfigurationExtension do
+describe ConfigDefault::RailsApplicationConfigurationPatch do
   describe "#load_database_yaml" do
     it "load database configuration in rails style" do
       expect(Rails.application.config.load_database_yaml).to eq(

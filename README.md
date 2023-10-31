@@ -33,11 +33,11 @@ end
 ```
 
 If you want to implement Rails monkey patches for `Rails.application.config_for` and ability to
-separate `database.yml` file you need to apply `#init_rails_monkey_patch!` method in your
+separate `database.yml` file you need to apply `#init_rails_patch!` method in your
 `application.yml` file before application initialization.
 
 ```ruby
-  ConfigDefault.init_rails_monkey_patch!
+  ConfigDefault.init_rails_patch!
 ```
 
 ## Usage
