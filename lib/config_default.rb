@@ -27,7 +27,7 @@ module ConfigDefault
     config = load_file(name)
 
     data = default_config.deep_merge(config)
-    data = key ? data[key] : data
+    data = data[key] if key
 
     return {} if data.nil?
 
