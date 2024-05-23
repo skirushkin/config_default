@@ -17,10 +17,10 @@ module ConfigDefault::RailsApplicationPatch
   end
 end
 
-module ConfigDefault::Init
+module ConfigDefault::RailsPatch
   extend self
 
-  def init_rails_patch!
+  def apply!
     return unless Object.const_defined?(:Rails)
 
     Rails::Application.prepend(ConfigDefault::RailsApplicationPatch)

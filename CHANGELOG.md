@@ -1,3 +1,18 @@
+## 0.3.2
+
+- Move patches to RailsPatch Module.
+- Introduce `#apply_rails_patch!`
+
+## 0.3.1
+
+- Automate CI release
+
+## 0.3.0
+
+- Rename Extension to Patch and move to Init Module.
+- Update various gems.
+- Rails 7.1 support check.
+
 ## 0.2.5
 
 - Remove `attributes` keyword.

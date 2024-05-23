@@ -82,7 +82,7 @@ describe ConfigDefault do
   end
 end
 
-ConfigDefault.init_rails_patch!
+ConfigDefault.apply_rails_patch!
 make_rails_app
 
 describe ConfigDefault::RailsApplicationPatch do
