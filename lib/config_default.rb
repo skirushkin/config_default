@@ -4,7 +4,7 @@ require "active_support/core_ext/hash"
 
 require "config_default/version"
 require "config_default/config"
-require "config_default/init"
+require "config_default/rails_patch"
 require "config_default/struct"
 
 module ConfigDefault
@@ -18,8 +18,8 @@ module ConfigDefault
     yield(config) if block_given?
   end
 
-  def init_rails_patch!
-    ConfigDefault::Init.init_rails_patch!
+  def apply_rails_patch!
+    ConfigDefault::RailsPatch.apply!
   end
 
   def load(name, key: Rails.env, symbolize_keys: false, deep_symbolize_keys: false)
@@ -27,7 +27,7 @@ module ConfigDefault
     config = load_file(name)
 
     data = default_config.deep_merge(config)
-    data = key ? data[key] : data
+    data = data[key] if key
 
     return {} if data.nil?
 

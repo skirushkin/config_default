@@ -33,18 +33,18 @@ end
 ```
 
 If you want to implement Rails monkey patches for `Rails.application.config_for` and ability to
-separate `database.yml` file you need to apply `#init_rails_patch!` method in your
-`application.yml` file before application initialization.
+separate `database.yml` file you need to execute `#apply_rails_patch!` method in your `application.rb`
+file before application init.
 
 ```ruby
-  ConfigDefault.init_rails_patch!
+  ConfigDefault.apply_rails_patch!
 ```
 
 ## Usage
 
 ### Default behaviour
 
-First you need to separate you configuration to default and not.
+First you need to separate you configuration to `.default` and not.
 Let's check an example for Rails default config file `config/database.yml`:
 
 ```yaml
@@ -82,7 +82,8 @@ production:
 ```
 
 All you need after creating this file in your secret location is to place this file near with
-previous one. ConfigDefault will merge them automatically on startup.
+the `.default` one.
+ConfigDefault will merge them automatically on startup.
 
 ### Your application configuration
 
