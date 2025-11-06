@@ -1,3 +1,8 @@
+## 0.3.3
+
+- Upgrade to latest rails.
+- Drop ruby < 3.2 support.
+
 ## 0.3.2
 
 - Move patches to RailsPatch Module.
