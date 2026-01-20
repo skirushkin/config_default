@@ -26,8 +26,12 @@ module ConfigDefault
     default_config = load_file("#{name}.#{config.postfix}")
     config = load_file(name)
 
+    if key
+      default_config = default_config[key] || {}
+      config = config[key] || {}
+    end
+
     data = default_config.deep_merge(config)
-    data = data[key] if key
 
     return {} if data.nil?
 
