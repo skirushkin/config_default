@@ -26,9 +26,12 @@ module ConfigDefault
     default_config = load_file("#{name}.#{config.postfix}")
     config = load_file(name)
 
-    data = default_config.deep_merge(config)
-    data = data[key] if key
+    if key
+      default_config = default_config[key] || {}
+      config = config[key] || {}
+    end
 
+    data = default_config.deep_merge(config)
     return {} if data.nil?
 
     if deep_symbolize_keys
