@@ -54,6 +54,8 @@ class ConfigDefault::Struct
   def define_methods!
     @attributes.each do |key, value|
       next if RESERVED_METHODS.include?(key.to_sym)
+
+      value.freeze
       define_singleton_method(key) { value }
     end
   end
