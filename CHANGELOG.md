@@ -1,3 +1,8 @@
+## 0.5.2
+
+- Upgrade to ruby & gems.
+- Improve struct freeze.
+
 ## 0.3.3
 
 - Upgrade to latest rails.

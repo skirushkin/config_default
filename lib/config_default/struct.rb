@@ -12,6 +12,7 @@ class ConfigDefault::Struct
     define_methods!
 
     @attributes.freeze
+    freeze
   end
 
   def [](key)
