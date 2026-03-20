@@ -42,9 +42,11 @@ module ConfigDefault
     end
   end
 
-  def struct(name, key: Rails.env, recursive: false, allow_nil: false)
+  def struct(name, key: Rails.env, recursive: false, allow_nil: false, &block)
     attributes = hash(name, key: key)
-    ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
+    struct = ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
+    struct.class_eval(&block) if block
+    struct
   end
 
   private

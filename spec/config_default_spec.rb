@@ -62,6 +62,21 @@ describe ConfigDefault do
       end
     end
 
+    context "with block" do
+      it "implements calculated method" do
+        config = described_class.struct(:example1) do
+          def calculated_method
+            1 + 2
+          end
+        end
+
+        expect(config.first).to eq("one")
+        expect(config.second).to eq("example")
+        expect { config.third }.to raise_error(NoMethodError)
+        expect(config.calculated_method).to eq(3)
+      end
+    end
+
     context "recursive: true" do
       it "loads correct struct from nested" do
         config = described_class.struct(:nested, recursive: true)
