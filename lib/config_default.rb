@@ -19,7 +19,10 @@ module ConfigDefault
   end
 
   def apply_rails_patch!
-    ConfigDefault::RailsPatch.apply!
+    return unless Object.const_defined?(:Rails)
+
+    Rails::Application.prepend(ConfigDefault::RailsApplicationPatch)
+    Rails::Application::Configuration.prepend(ConfigDefault::RailsApplicationConfigurationPatch)
   end
 
   def hash(name, key: Rails.env, symbolize_keys: false, deep_symbolize_keys: false)
