@@ -18,34 +18,34 @@ describe ConfigDefault do
     end
   end
 
-  describe "#load" do
+  describe "#hash" do
     it "loads config from example1" do
-      expect(described_class.load(:example1)).to eq("first" => "one", "second" => "example")
+      expect(described_class.hash(:example1)).to eq("first" => "one", "second" => "example")
     end
 
     it "loads config from example2" do
-      expect(described_class.load(:example2)).to eq("first" => "one")
+      expect(described_class.hash(:example2)).to eq("first" => "one")
     end
 
     it "loads config from example3" do
-      expect(described_class.load(:example3)).to eq("second" => "two")
+      expect(described_class.hash(:example3)).to eq("second" => "two")
     end
 
     it "loads config from example1 and symbolize_keys" do
-      expect(described_class.load(:example1, symbolize_keys: true)).to \
+      expect(described_class.hash(:example1, symbolize_keys: true)).to \
         eq(first: "one", second: "example")
     end
 
     it "does not fail on empty key symbolization" do
-      expect(described_class.load(:example1, key: "incorrect", symbolize_keys: true)).to eq({})
-      expect(described_class.load(:example1, key: "incorrect", deep_symbolize_keys: true)).to eq({})
+      expect(described_class.hash(:example1, key: "incorrect", symbolize_keys: true)).to eq({})
+      expect(described_class.hash(:example1, key: "incorrect", deep_symbolize_keys: true)).to eq({})
     end
   end
 
-  describe "#load_struct" do
+  describe "#struct" do
     describe "#to_hash" do
       it "convert different options to different hash" do
-        config = described_class.load_struct(:nested, recursive: true)
+        config = described_class.struct(:nested, recursive: true)
 
         expect(config.first.to_hash).to eq("second" => { "third" => "three" })
         expect(config.first.second.to_hash).to eq("third" => "three")
@@ -54,17 +54,17 @@ describe ConfigDefault do
 
     context "default" do
       it "loads correct struct from example1" do
-        config = described_class.load_struct(:example1)
+        config = described_class.struct(:example1)
 
         expect(config.first).to eq("one")
         expect(config.second).to eq("example")
-        expect { config.third }.to raise_error(ArgumentError)
+        expect { config.third }.to raise_error(NoMethodError)
       end
     end
 
     context "recursive: true" do
       it "loads correct struct from nested" do
-        config = described_class.load_struct(:nested, recursive: true)
+        config = described_class.struct(:nested, recursive: true)
 
         expect(config.first.second.third).to eq("three")
       end
@@ -72,7 +72,7 @@ describe ConfigDefault do
 
     context "allow_nil: true" do
       it "loads correct struct from example1" do
-        config = described_class.load_struct(:example1, allow_nil: true)
+        config = described_class.struct(:example1, allow_nil: true)
 
         expect(config.first).to eq("one")
         expect(config.second).to eq("example")

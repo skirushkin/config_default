@@ -1,3 +1,10 @@
+## 0.5.4
+- Upgrade gems.
+- Rename #load to #hash
+- Rename #load_struct to #struct
+- Change ArgumentError to NoMethodError (call super)
+- Make #read_file method private
+
 ## 0.5.2
 
 - Upgrade to ruby & gems.
