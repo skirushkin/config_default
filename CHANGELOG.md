@@ -1,3 +1,6 @@
+## 0.5.5
+- Ability to pass block context in #struct
+
 ## 0.5.4
 - Upgrade gems.
 - Rename #load to #hash
