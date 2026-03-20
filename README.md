@@ -92,7 +92,7 @@ Just create `config/app.default.yml` (test/staging) and `config/app.yml` (stagin
 And then in your application load it:
 
 ```ruby
-config = ConfigDefault.load(:app)
+config = ConfigDefault.hash(:app)
 ```
 
 It will load result hash with merging `app.yml` and `app.default.yml` files.
@@ -101,34 +101,34 @@ So it's mean that what key (string or symbol) you will define in the YAML file =
 
 You can change this behaviour with `#load` options:
 ```ruby
-config = ConfigDefault.load(:app, symbolize_keys: true) # Hash with symbolized first keys
-config = ConfigDefault.load(:app, deep_symbolize_keys: true) # Hash with symbolized all keys
+config = ConfigDefault.hash(:app, symbolize_keys: true) # Hash with symbolized first keys
+config = ConfigDefault.hash(:app, deep_symbolize_keys: true) # Hash with symbolized all keys
 ```
 
 By default `ConfigDefault` using `Rails.env` to determnine what key you need from you config file.
 You can pass this key by your own:
 ```ruby
-config = ConfigDefault.load(:app, key: nil) # Will not use key at all and result by full file
-config = ConfigDefault.load(:app, key: "preprod") # Will search preprod key in file
+config = ConfigDefault.hash(:app, key: nil) # Will not use key at all and result by full file
+config = ConfigDefault.hash(:app, key: "preprod") # Will search preprod key in file
 ```
 
-### `#load_struct` method
+### `#struct` method
 
-If you want to use configuration as a struct object you can use `#load_struct` method.
+If you want to use configuration as a struct object you can use `#struct` method.
 Let's see an example with `database.yaml` config above:
 
 ```ruby
-config = ConfigDefault.load_struct(:database)
+config = ConfigDefault.struct(:database)
 config.host
 # => "postgres"
 config.lolkek
-# => StandardError: There is no option :lolkek in configuration.
+# => NoMethodError
 ```
 
 If your want to not raise an error on wrong key using (sometimes it's helpful) please use `allow_nil` option:
 
 ```ruby
-config = ConfigDefault.load_struct(:database, allow_nil: true)
+config = ConfigDefault.struct(:database, allow_nil: true)
 config.host
 # => "postgres"
 config.lolkek
@@ -145,7 +145,7 @@ first:
 ```
 
 ```ruby
-config = ConfigDefault.load_struct(:app, key: nil, recursive: true)
+config = ConfigDefault.struct(:app, key: nil, recursive: true)
 config.first.second.third
 # => "option"
 ```
@@ -155,7 +155,7 @@ It will be `ActiveSupport::HashWithIndifferentAccess`.
 Example with `app.default.yml` from above:
 
 ```ruby
-config = ConfigDefault.load_struct(:app, key: nil, recursive: true)
+config = ConfigDefault.struct(:app, key: nil, recursive: true)
 config.to_hash
 # => { "first" => { "second" => { "third" => "option" } } }
 config.first.to_hash
@@ -177,7 +177,7 @@ config.first.to_hash
 config.first.second.third
 # => "option"
 config.first.lolkek
-# => StandardError: There is no option :lolkek in configuration.
+# => NoMethodError
 ```
 
 `ConfigDefault::Struct` supports `recursive` and `allow_nil` options.

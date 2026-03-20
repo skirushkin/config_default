@@ -22,9 +22,9 @@ module ConfigDefault
     ConfigDefault::RailsPatch.apply!
   end
 
-  def load(name, key: Rails.env, symbolize_keys: false, deep_symbolize_keys: false)
-    default_config = load_file("#{name}.#{config.postfix}")
-    config = load_file(name)
+  def hash(name, key: Rails.env, symbolize_keys: false, deep_symbolize_keys: false)
+    default_config = read_file("#{name}.#{config.postfix}")
+    config = read_file(name)
 
     if key
       default_config = default_config[key] || {}
@@ -32,7 +32,6 @@ module ConfigDefault
     end
 
     data = default_config.deep_merge(config)
-    return {} if data.nil?
 
     if deep_symbolize_keys
       data.deep_symbolize_keys
@@ -43,15 +42,17 @@ module ConfigDefault
     end
   end
 
-  def load_file(name)
+  def struct(name, key: Rails.env, recursive: false, allow_nil: false)
+    attributes = hash(name, key: key)
+    ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
+  end
+
+  private
+
+  def read_file(name)
     file_name = File.join(config.config_path, "#{name}.yml")
     ActiveSupport::ConfigurationFile.parse(file_name)
   rescue
     {}
-  end
-
-  def load_struct(name, key: Rails.env, recursive: false, allow_nil: false)
-    attributes = load(name, key: key)
-    ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
   end
 end
