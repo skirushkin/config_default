@@ -29,8 +29,6 @@ module ConfigDefault
     default_config = read_file("#{name}.#{config.postfix}")
     config = read_file(name)
 
-    p config
-
     if key
       default_config = default_config[key] || {}
       config = config[key] || {}
