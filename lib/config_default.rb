@@ -29,6 +29,8 @@ module ConfigDefault
     default_config = read_file("#{name}.#{config.postfix}")
     config = read_file(name)
 
+    p config
+
     if key
       default_config = default_config[key] || {}
       config = config[key] || {}
@@ -57,7 +59,7 @@ module ConfigDefault
   def read_file(name)
     file_name = File.join(config.config_path, "#{name}.yml")
     ActiveSupport::ConfigurationFile.parse(file_name)
-  rescue
+  rescue Errno::ENOENT
     {}
   end
 end
