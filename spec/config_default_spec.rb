@@ -36,9 +36,17 @@ describe ConfigDefault do
         eq(first: "one", second: "example")
     end
 
+    it "does not fail if file does not exist" do
+      expect(described_class.hash(:not_exist)).to eq({})
+    end
+
     it "does not fail on empty key symbolization" do
       expect(described_class.hash(:example1, key: "incorrect", symbolize_keys: true)).to eq({})
       expect(described_class.hash(:example1, key: "incorrect", deep_symbolize_keys: true)).to eq({})
+    end
+
+    it "fails if YAML not correct" do
+      expect { described_class.hash(:not_correct_at_all) }.to raise_error(RuntimeError)
     end
   end
 
