@@ -56,8 +56,6 @@ module ConfigDefault
 
   def read_file(name)
     file_name = File.join(config.config_path, "#{name}.yml")
-    ActiveSupport::ConfigurationFile.parse(file_name)
-  rescue Errno::ENOENT
-    {}
+    File.exist?(file_name) ? ActiveSupport::ConfigurationFile.parse(file_name) : {}
   end
 end
