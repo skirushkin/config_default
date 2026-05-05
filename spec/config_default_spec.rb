@@ -51,10 +51,10 @@ describe ConfigDefault do
   end
 
   describe "#struct" do
-    describe "#to_s" do
+    describe "#inspect" do
       it "convert config to String" do
         config = described_class.struct(:nested, recursive: true)
-        expect(config.to_s).to be_a(String)
+        expect(config.inspect).to be_a(String)
       end
     end
 

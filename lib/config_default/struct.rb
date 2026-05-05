@@ -28,7 +28,8 @@ class ConfigDefault::Struct
   end
 
   def inspect
-    "#<ConfigDefault::Struct @attributes=#{to_hash}>"
+    "#<ConfigDefault::Struct @attributes=#{to_hash} " \
+      "@recursive=#{@recursive} @allow_nil=#{@allow_nil}>"
   end
 
   def to_hash
