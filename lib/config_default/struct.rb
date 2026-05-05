@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConfigDefault::Struct
-  RESERVED_METHODS = %i[method_missing respond_to_missing? to_hash].freeze
+  RESERVED_METHODS = %i[method_missing respond_to_missing? inspect to_hash to_s].freeze
 
   def initialize(attributes, recursive: false, allow_nil: false)
     @attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
@@ -25,6 +25,10 @@ class ConfigDefault::Struct
 
   def respond_to_missing?(*_args)
     true
+  end
+
+  def inspect
+    "#<ConfigDefault::Struct @attributes=#{to_hash}>"
   end
 
   def to_hash

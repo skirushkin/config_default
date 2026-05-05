@@ -26,15 +26,22 @@ module ConfigDefault
   end
 
   def hash(name, key: Rails.env, symbolize_keys: false, deep_symbolize_keys: false)
-    default_config = read_file("#{name}.#{config.postfix}")
-    config = read_file(name)
+    path1 = File.join(config.config_path, "#{name}.#{config.postfix}.yml")
+    path2 = File.join(config.config_path, "#{name}.yml")
 
-    if key
-      default_config = default_config[key] || {}
-      config = config[key] || {}
+    unless File.exist?(path1) || File.exist?(path2)
+      raise Errno::ENOENT.new("#{path1} && #{path2}")
     end
 
-    data = default_config.deep_merge(config)
+    config1 = File.exist?(path1) ? ActiveSupport::ConfigurationFile.parse(path1) : {}
+    config2 = File.exist?(path2) ? ActiveSupport::ConfigurationFile.parse(path2) : {}
+
+    if key
+      config1 = config1[key] || {}
+      config2 = config2[key] || {}
+    end
+
+    data = config1.deep_merge(config2)
 
     if deep_symbolize_keys
       data.deep_symbolize_keys
@@ -50,12 +57,5 @@ module ConfigDefault
     struct = ConfigDefault::Struct.new(attributes, recursive: recursive, allow_nil: allow_nil)
     struct.class_eval(&block) if block
     struct
-  end
-
-  private
-
-  def read_file(name)
-    file_name = File.join(config.config_path, "#{name}.yml")
-    File.exist?(file_name) ? ActiveSupport::ConfigurationFile.parse(file_name) : {}
   end
 end
