@@ -36,13 +36,13 @@ describe ConfigDefault do
         eq(first: "one", second: "example")
     end
 
-    it "does not fail if file does not exist" do
-      expect(described_class.hash(:not_exist)).to eq({})
-    end
-
     it "does not fail on empty key symbolization" do
       expect(described_class.hash(:example1, key: "incorrect", symbolize_keys: true)).to eq({})
       expect(described_class.hash(:example1, key: "incorrect", deep_symbolize_keys: true)).to eq({})
+    end
+
+    it "fails if both files do not exist" do
+      expect { described_class.hash(:not_exist) }.to raise_error(Errno::ENOENT)
     end
 
     it "fails if YAML not correct" do
@@ -51,6 +51,13 @@ describe ConfigDefault do
   end
 
   describe "#struct" do
+    describe "#inspect" do
+      it "convert config to String" do
+        config = described_class.struct(:nested, recursive: true)
+        expect(config.inspect).to be_a(String)
+      end
+    end
+
     describe "#to_hash" do
       it "convert different options to different hash" do
         config = described_class.struct(:nested, recursive: true)
