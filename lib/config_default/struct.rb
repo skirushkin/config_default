@@ -23,10 +23,6 @@ class ConfigDefault::Struct
     super
   end
 
-  def respond_to_missing?(*_args)
-    true
-  end
-
   def inspect
     "#<ConfigDefault::Struct @attributes=#{to_hash} " \
       "@recursive=#{@recursive} @allow_nil=#{@allow_nil}>"
