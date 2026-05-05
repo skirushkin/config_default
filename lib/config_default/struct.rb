@@ -18,9 +18,13 @@ class ConfigDefault::Struct
     @attributes[key]
   end
 
-  def method_missing(method, *_args)
+  def method_missing(method_name, *args, &block)
     return if @allow_nil
     super
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    @attributes.key?(method_name) || super
   end
 
   def inspect

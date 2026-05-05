@@ -29,12 +29,13 @@ module ConfigDefault
     path1 = File.join(config.config_path, "#{name}.#{config.postfix}.yml")
     path2 = File.join(config.config_path, "#{name}.yml")
 
-    unless File.exist?(path1) || File.exist?(path2)
-      raise Errno::ENOENT.new("#{path1} && #{path2}")
-    end
+    exist1 = File.exist?(path1)
+    exist2 = File.exist?(path2)
 
-    config1 = File.exist?(path1) ? ActiveSupport::ConfigurationFile.parse(path1) : {}
-    config2 = File.exist?(path2) ? ActiveSupport::ConfigurationFile.parse(path2) : {}
+    raise Errno::ENOENT.new("#{path1} && #{path2}") unless exist1 || exist2
+
+    config1 = exist1 ? ActiveSupport::ConfigurationFile.parse(path1) : {}
+    config2 = exist2 ? ActiveSupport::ConfigurationFile.parse(path2) : {}
 
     if key
       config1 = config1[key] || {}
